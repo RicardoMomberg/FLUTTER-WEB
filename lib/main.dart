@@ -10,6 +10,7 @@ void main() async {
     appId: "1:170284411810:web:682c38225626785019e0fb",
     messagingSenderId: "170284411810", 
     projectId: "image-gallery-web-97022",
+    storageBucket: "image-gallery-web-97022.firebasestorage.app",
   ));
 
   runApp(MyApp());
