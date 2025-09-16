@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_app/image_galley.dart';
 
 void main() async {
 
@@ -20,14 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Image gallery app',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Image gallery web'),
-        ),
-        body: Center(
-          child: Text('Firebase initialized successfully!'),
-        ),
-      ),
+      home: ImageGallery(),
     );
   }
 }
