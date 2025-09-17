@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_app/l10n/app_localizations.dart';
+import 'package:image_gallery_app/main.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 
@@ -55,25 +57,53 @@ class _ImageGalleyState extends State<ImageGallery> {
     }
   }
 
+  _changeLanguage(Locale locale) {
+    setState(() {
+      MyApp.setLocale(context, locale);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Image Gallery')),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.title),
+        actions: [
+          PopupMenuButton(
+            onSelected: (String value) {
+              if (value == 'English') {
+                _changeLanguage(Locale('en'));
+              } else if (value == 'Português') {
+                _changeLanguage(Locale('pt'));
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return {'English', 'Português'}.map((String choice) {
+                return PopupMenuItem(value: choice, child: Text(choice));
+              }).toList();
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           children: [
-            _image != null ? Image.memory(_image!) : Text('No image selected'),
-            ElevatedButton(onPressed: _pickeImage, child: Text('pick image')),
+            _image != null
+                ? Image.memory(_image!)
+                : Text(AppLocalizations.of(context)!.no_image_selected),
+            ElevatedButton(
+              onPressed: _pickeImage,
+              child: Text(AppLocalizations.of(context)!.select_image),
+            ),
             const SizedBox(height: 10),
             if (_image != null)
               ElevatedButton(
                 onPressed: _uploadImage,
-                child: Text('Upload image'),
+                child: Text(AppLocalizations.of(context)!.upload_image),
               ),
-              if (loading != null && loading == true) CircularProgressIndicator(),
-              if (_image != null && loading == false)
-                const Text('image uploaded successfully!'),              
-
+            if (loading != null && loading == true) CircularProgressIndicator(),
+            if (_image != null && loading == false)
+              Text(AppLocalizations.of(context)!.image_uploaded),
           ],
         ),
       ),
