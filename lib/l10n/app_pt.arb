@@ -1,0 +1,8 @@
+{
+  "@@locale": "pt",
+  "title": "Galeria de imagens",
+  "select_image": "Selecionar imagem",
+  "upload_image": "Enviar imagem",
+  "no_image_selected": "Nenhuma imagem selecionada.",
+  "image_uploaded": "Imagem enviada com sucesso!"
+}

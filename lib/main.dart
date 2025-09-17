@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_app/image_galley.dart';
+import 'package:image_gallery_app/l10n/app_localizations.dart';
 
 void main() async {
 
@@ -17,12 +18,17 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
+  Locale? _locale = const Locale('pt');
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Image gallery app',
-      theme: ThemeData(primarySwatch: Colors.blue),
       home: ImageGallery(),
+      locale: _locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
