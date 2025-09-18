@@ -70,16 +70,45 @@ class _ImageGalleyState extends State<ImageGallery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        elevation: 1,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.photo_library_rounded),
+            const SizedBox(width: 8),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Image: ',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey[800],
+                    ),
+                  ),
+                  const TextSpan(
+                    text: 'Gallery',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Text(AppLocalizations.of(context)!.title),
+          ],
         ),
+
         actions: [
           IconButton(
-            icon: Icon(Icons.brightness_6),
+            icon: Icon(Icons.brightness_6, color: Colors.blueGrey[800]),
             onPressed: () {
               if (Theme.of(context).brightness == Brightness.dark) {
                 _changeTheme(lightTheme);
@@ -104,27 +133,101 @@ class _ImageGalleyState extends State<ImageGallery> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            _image != null
-                ? Image.memory(_image!)
-                : Text(AppLocalizations.of(context)!.no_image_selected),
-            ElevatedButton(
-              onPressed: _pickeImage,
-              child: Text(AppLocalizations.of(context)!.select_image),
-            ),
-            const SizedBox(height: 10),
-            if (_image != null)
-              ElevatedButton(
-                onPressed: _uploadImage,
-                child: Text(AppLocalizations.of(context)!.upload_image),
+      body: Stack(
+        children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                elevation: 8,
+                shadowColor: Colors.black26,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.blueGrey.shade100),
+                        ),
+                        child: _image != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.memory(_image!, fit: BoxFit.cover),
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.image),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.no_image_selected,
+                                    style: TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton.icon(
+                        onPressed: _pickeImage,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                        icon: const Icon(
+                          Icons.photo_library,
+                          color: Colors.white,
+                        ),
+                        label: Text(AppLocalizations.of(context)!.select_image),
+                      ),
+                      const SizedBox(height: 10),
+                      if (_image != null)
+                        ElevatedButton.icon(
+                          onPressed: _uploadImage,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.cloud_upload,
+                            color: Colors.white,
+                          ),
+                          label: Text(
+                            AppLocalizations.of(context)!.upload_image,
+                          ),
+                        ),
+                      if (loading != null && loading == true)
+                        CircularProgressIndicator(),
+                      if (_image != null && loading == false)
+                        Text(AppLocalizations.of(context)!.image_uploaded),
+                    ],
+                  ),
+                ),
               ),
-            if (loading != null && loading == true) CircularProgressIndicator(),
-            if (_image != null && loading == false)
-              Text(AppLocalizations.of(context)!.image_uploaded),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
