@@ -63,12 +63,31 @@ class _ImageGalleyState extends State<ImageGallery> {
     });
   }
 
+  _changeTheme(ThemeData theme) {
+    MyApp.setTheme(context, theme);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.title),
+        title: Center(
+          child: Text(
+            AppLocalizations.of(context)!.title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
         actions: [
+          IconButton(
+            icon: Icon(Icons.brightness_6),
+            onPressed: () {
+              if (Theme.of(context).brightness == Brightness.dark) {
+                _changeTheme(lightTheme);
+              } else {
+                _changeTheme(darkTheme);
+              }
+            },
+          ),
           PopupMenuButton(
             onSelected: (String value) {
               if (value == 'English') {
