@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 class FileValidator {
-  static const int maxFileSize = 5 * 1024 * 1024; // 5 MB
+  static const int maxFileSize = 2 * 1024 * 1024; // 2 MB
   static const String validExtension = '.jpeg';
 
   static bool isJpeg(String filename) {
