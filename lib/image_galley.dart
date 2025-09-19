@@ -118,6 +118,7 @@ class _ImageGalleyState extends State<ImageGallery> {
             },
           ),
           PopupMenuButton(
+            icon: Icon(Icons.language),
             onSelected: (String value) {
               if (value == 'English') {
                 _changeLanguage(Locale('en'));
@@ -178,6 +179,7 @@ class _ImageGalleyState extends State<ImageGallery> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
+                        key: const Key('select_image_button'),
                         onPressed: _pickeImage,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
